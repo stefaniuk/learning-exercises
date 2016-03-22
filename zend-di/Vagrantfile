@@ -1,0 +1,19 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    config.vm.provider :virtualbox do |vb|
+        vb.name = "zend-di"
+        vb.customize ["modifyvm", :id, "--ioapic", "on"]
+        vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+        vb.memory = 512
+        vb.cpus = 1
+    end
+
+    config.vm.box = "ubuntu/trusty64"
+    config.vm.hostname = "zend-di"
+    config.vm.synced_folder ".", "/project"
+    config.vm.provision :docker
+    config.vm.provision "shell", path: "provision.sh"
+
+end
