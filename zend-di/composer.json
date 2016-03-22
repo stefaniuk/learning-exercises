@@ -1,0 +1,22 @@
+{
+    "name": "stefaniuk/learning-exercises-zend-di",
+    "description": "Learning Exercises - Zend Di",
+    "require": {
+        "php": ">=7.0",
+        "zendframework/zend-di": "^2.6.0",
+        "zendframework/zend-servicemanager": "^3.0.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.2.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "LearningExercises\\ZendDi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LearningExercisesTest\\ZendDi\\": "test/"
+        }
+    }
+}
