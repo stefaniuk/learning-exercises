@@ -1,0 +1,22 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    config.vm.provider :virtualbox do |vb|
+        vb.name = "apigility"
+        vb.customize ["modifyvm", :id, "--ioapic", "on"]
+        vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+        vb.memory = 512
+        vb.cpus = 1
+    end
+
+    config.vm.box = "ubuntu/trusty64"
+    config.vm.hostname = "apigility"
+    config.vm.synced_folder ".", "/var/www"
+    config.vm.provision :docker
+    config.vm.provision :docker_compose, yml: "/var/www/docker-compose.yml", rebuild: true, run: "always"
+    config.vm.provision "shell", path: "provision.sh"
+
+    config.vm.network "forwarded_port", guest: 8080, host: 8080
+
+end
