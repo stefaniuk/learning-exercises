@@ -26,4 +26,7 @@ return array(
     'ZF\Versioning',
     'Phpro\DoctrineHydrationModule',
     'ZF\Apigility\Doctrine\Server',
+    'DoctrineModule',
+    'DoctrineORMModule',
+    'ZF\Doctrine\QueryBuilder',
 );

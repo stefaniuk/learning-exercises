@@ -31,7 +31,10 @@
         "zfcampus/zf-apigility": "~1.1",
         "zfcampus/zf-apigility-documentation": "^1.0.5",
         "zfcampus/zf-development-mode": "~2.0",
-        "zfcampus/zf-apigility-doctrine": "~2.0.1"
+        "doctrine/doctrine-module": "*@dev",
+        "doctrine/doctrine-orm-module": "*@dev",
+        "zfcampus/zf-apigility-doctrine": "~2.0.1",
+        "zfcampus/zf-doctrine-querybuilder": "~1.4.4"
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",
