@@ -24,4 +24,6 @@ return array(
     'ZF\Rest',
     'ZF\Rpc',
     'ZF\Versioning',
+    'Phpro\DoctrineHydrationModule',
+    'ZF\Apigility\Doctrine\Server',
 );
