@@ -1,6 +1,10 @@
 apigility:
   build: .
-  ports:
-    - 8080:80
   volumes:
     - .:/var/www
+  ports:
+    - 8080:80
+  links:
+    - postgres
+postgres:
+  image: postgres
