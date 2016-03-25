@@ -1,5 +1,2 @@
-vendor/
-!public/vendor/README.md
-data/cache/*
-!data/cache/.gitkeep
 .vagrant
+vendor

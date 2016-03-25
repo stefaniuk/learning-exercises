@@ -24,9 +24,9 @@ return array(
     'ZF\Rest',
     'ZF\Rpc',
     'ZF\Versioning',
-    'Phpro\DoctrineHydrationModule',
+    /*'Phpro\DoctrineHydrationModule',
     'ZF\Apigility\Doctrine\Server',
     'DoctrineModule',
     'DoctrineORMModule',
-    'ZF\Doctrine\QueryBuilder',
+    'ZF\Doctrine\QueryBuilder',*/
 );

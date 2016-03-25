@@ -1,10 +1,15 @@
 apigility:
   build: .
+  container_name: apigility
+  hostname: apigility
   volumes:
     - .:/var/www
   ports:
-    - 8080:80
+    - 8080:8080
+    - 8443:8443
   links:
     - postgres
 postgres:
   image: postgres
+  container_name: postgres
+  hostname: postgres
