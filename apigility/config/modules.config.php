@@ -1,12 +1,5 @@
 <?php
-/**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
- */
 
-/**
- * List of enabled modules for this application.
- */
 return array(
     'Application',
     'ZF\DevelopmentMode',
@@ -24,9 +17,9 @@ return array(
     'ZF\Rest',
     'ZF\Rpc',
     'ZF\Versioning',
-    /*'Phpro\DoctrineHydrationModule',
-    'ZF\Apigility\Doctrine\Server',
     'DoctrineModule',
     'DoctrineORMModule',
-    'ZF\Doctrine\QueryBuilder',*/
+    'Phpro\DoctrineHydrationModule',
+    'ZF\Apigility\Doctrine\Server',
+    'ZF\Doctrine\QueryBuilder',
 );
