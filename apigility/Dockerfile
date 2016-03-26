@@ -19,6 +19,7 @@ RUN apt-get --yes --ignore-missing --no-install-recommends install \
         pgsql \
         zip
 RUN cp /usr/src/php/php.ini-development /usr/local/etc/php/php.ini \
+    && sed -i "s/display_errors = On/display_errors = Off/g" /usr/local/etc/php/php.ini \
     && sed -i "s/;always_populate_raw_post_data/always_populate_raw_post_data/g" /usr/local/etc/php/php.ini \
     && printf '[Date]\ndate.timezone = Europe/London' > /usr/local/etc/php/conf.d/timezone.ini
 RUN pecl install xdebug
