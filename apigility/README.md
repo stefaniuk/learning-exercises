@@ -13,6 +13,30 @@ $ php public/index.php orm:schema-tool:create
 ```
 
 ```
-GET https://localhost:8443/apigility/api/module/Test
-GET https://localhost:8443/user?XDEBUG_SESSION_START
+HTTP GET https://localhost:8443/user
+
+$(function() {
+    $.ajax({
+        url: 'https://localhost:8443/user',
+        type: 'GET',
+        data: {
+            'filter': [
+                {
+                    'field': 'id',
+                    'where': 'or',
+                    'type': 'between',
+                    'from': '1',
+                    'to': '100'
+                },
+                {
+                    'field': 'id',
+                    'where': 'or',
+                    'type': 'gte',
+                    'value': '1000'
+                }
+            ]
+        },
+        dataType: 'json'
+    });
+});
 ```
