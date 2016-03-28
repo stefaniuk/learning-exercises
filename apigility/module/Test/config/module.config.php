@@ -11,11 +11,22 @@ return array(
                     ),
                 ),
             ),
+            'test.rpc.auth' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/auth',
+                    'defaults' => array(
+                        'controller' => 'Test\\V1\\Rpc\\Auth\\Controller',
+                        'action' => 'auth',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
         'uri' => array(
             0 => 'test.rest.doctrine.user',
+            1 => 'test.rpc.auth',
         ),
     ),
     'zf-rest' => array(
@@ -46,6 +57,7 @@ return array(
     'zf-content-negotiation' => array(
         'controllers' => array(
             'Test\\V1\\Rest\\User\\Controller' => 'HalJson',
+            'Test\\V1\\Rpc\\Auth\\Controller' => 'Json',
         ),
         'accept-whitelist' => array(
             'Test\\V1\\Rest\\User\\Controller' => array(
@@ -56,6 +68,19 @@ return array(
         ),
         'content-type-whitelist' => array(
             'Test\\V1\\Rest\\User\\Controller' => array(
+                0 => 'application/vnd.test.v1+json',
+                1 => 'application/json',
+            ),
+        ),
+        'accept_whitelist' => array(
+            'Test\\V1\\Rpc\\Auth\\Controller' => array(
+                0 => 'application/vnd.test.v1+json',
+                1 => 'application/json',
+                2 => 'application/*+json',
+            ),
+        ),
+        'content_type_whitelist' => array(
+            'Test\\V1\\Rpc\\Auth\\Controller' => array(
                 0 => 'application/vnd.test.v1+json',
                 1 => 'application/json',
             ),
@@ -178,6 +203,20 @@ return array(
                 ),
                 'validators' => array(),
             ),
+        ),
+    ),
+    'controllers' => array(
+        'factories' => array(
+            'Test\\V1\\Rpc\\Auth\\Controller' => 'Test\\V1\\Rpc\\Auth\\AuthControllerFactory',
+        ),
+    ),
+    'zf-rpc' => array(
+        'Test\\V1\\Rpc\\Auth\\Controller' => array(
+            'service_name' => 'Auth',
+            'http_methods' => array(
+                0 => 'GET',
+            ),
+            'route_name' => 'test.rpc.auth',
         ),
     ),
 );
