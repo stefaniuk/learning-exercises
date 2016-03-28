@@ -9,11 +9,14 @@ RUN apt-get --yes update \
 # configure PHP
 RUN apt-get --yes --ignore-missing --no-install-recommends install \
         git \
+        libldap2-dev \
         libpq-dev \
         postgresql-client \
         zip \
         zlib1g-dev \
+    && ln -fs /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib \
     && docker-php-ext-install \
+        ldap \
         pdo \
         pdo_pgsql \
         pgsql \
