@@ -9,6 +9,7 @@ use Zend\Stdlib\ArraySerializableInterface;
  * Application\Entity\User.
  *
  * @ORM\Entity
+ * @ORM\Table(name="Users")
  */
 class User implements ArraySerializableInterface
 {
