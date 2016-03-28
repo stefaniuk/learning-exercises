@@ -22,4 +22,5 @@ return array(
     'Phpro\DoctrineHydrationModule',
     'ZF\Apigility\Doctrine\Server',
     'ZF\Doctrine\QueryBuilder',
+    'Test',
 );
