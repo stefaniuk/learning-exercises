@@ -9,16 +9,6 @@ services:
     hostname: master
     environment:
       NODE_TYPE: master
-  sentinel:
-    build: ./redis
-    image: sentinel
-    container_name: sentinel
-    hostname: sentinel
-    environment:
-      NODE_TYPE: sentinel
-    links:
-      - master
-
   slave1:
     build: ./redis
     image: slave1
@@ -28,19 +18,6 @@ services:
       NODE_TYPE: slave
     links:
       - master
-      - sentinel
-  sentinel1:
-    build: ./redis
-    image: sentinel1
-    container_name: sentinel1
-    hostname: sentinel1
-    environment:
-      NODE_TYPE: sentinel
-    links:
-      - slave1
-      - master
-      - sentinel
-
   slave2:
     build: ./redis
     image: slave2
@@ -50,9 +27,19 @@ services:
       NODE_TYPE: slave
     links:
       - master
-      - sentinel
       - slave1
-      - sentinel1
+
+  sentinel1:
+    build: ./redis
+    image: sentinel1
+    container_name: sentinel1
+    hostname: sentinel1
+    environment:
+      NODE_TYPE: sentinel
+    links:
+      - master
+      - slave1
+      - slave2
   sentinel2:
     build: ./redis
     image: sentinel2
@@ -61,8 +48,37 @@ services:
     environment:
       NODE_TYPE: sentinel
     links:
-      - slave2
       - master
-      - sentinel
       - slave1
+      - slave2
       - sentinel1
+  sentinel3:
+    build: ./redis
+    image: sentinel3
+    container_name: sentinel3
+    hostname: sentinel3
+    environment:
+      NODE_TYPE: sentinel
+    links:
+      - master
+      - slave1
+      - slave2
+      - sentinel1
+      - sentinel2
+
+  php:
+    build: ./php
+    image: php
+    container_name: php
+    hostname: php
+    volumes:
+      - ./php/assets/var/www:/var/www
+    links:
+      - master
+      - slave1
+      - slave2
+      - sentinel1
+      - sentinel2
+      - sentinel3
+    ports:
+      - 8080:80

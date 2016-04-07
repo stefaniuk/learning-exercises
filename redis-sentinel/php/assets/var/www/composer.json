@@ -1,0 +1,9 @@
+{
+    "name": "stefaniuk/learning-exercises-redis-sentinel",
+    "description": "Learning Exercises - Redis Sentinel",
+    "require": {
+        "php": ">=5.6",
+        "jamescauwelier/psredis": "^1.1",
+        "doctrine/orm": "^2.5.4"
+    }
+}

@@ -1,0 +1,3 @@
+.vagrant
+php/assets/var/www/vendor
+php/assets/var/www/composer.lock

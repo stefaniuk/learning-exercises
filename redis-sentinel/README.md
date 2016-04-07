@@ -3,8 +3,10 @@ $ vagrant up
 $ vagrant ssh
 $ docker-compose up -d
 $ docker-compose logs # Press `Ctrl-C` to exit
-$ make bash NAME=sentinel
+$ docker exec -it sentinel /bin/bash --login
 $ redis-cli
-$ sentinel master mymaster
-$ info Sentinel
+$ INFO Sentinel
+$ SENTINEL master mymaster
+$ SENTINEL slaves mymaster
+$ SENTINEL sentinels mymaster
 ```

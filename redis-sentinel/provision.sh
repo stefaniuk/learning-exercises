@@ -34,6 +34,7 @@ chmod +x /usr/local/bin/docker-compose
 echo "Installed $(docker-compose --version)"
 
 # install Redis command-line tools
-sudo apt-get install redis-tools
+apt-get --yes --ignore-missing --no-install-recommends install \
+    redis-tools
 
 exit 0
