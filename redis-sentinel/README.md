@@ -3,7 +3,7 @@ $ vagrant up
 $ vagrant ssh
 $ docker-compose up -d
 $ docker-compose logs # Press `Ctrl-C` to exit
-$ docker exec -it sentinel /bin/bash --login
+$ docker exec -it sentinel1 /bin/bash --login
 $ redis-cli
 $ INFO Sentinel
 $ SENTINEL master mymaster
