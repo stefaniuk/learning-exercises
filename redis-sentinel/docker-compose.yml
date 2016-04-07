@@ -1,0 +1,68 @@
+version: '2'
+
+services:
+
+  master:
+    build: ./redis
+    image: master
+    container_name: master
+    hostname: master
+    environment:
+      NODE_TYPE: master
+  sentinel:
+    build: ./redis
+    image: sentinel
+    container_name: sentinel
+    hostname: sentinel
+    environment:
+      NODE_TYPE: sentinel
+    links:
+      - master
+
+  slave1:
+    build: ./redis
+    image: slave1
+    container_name: slave1
+    hostname: slave1
+    environment:
+      NODE_TYPE: slave
+    links:
+      - master
+      - sentinel
+  sentinel1:
+    build: ./redis
+    image: sentinel1
+    container_name: sentinel1
+    hostname: sentinel1
+    environment:
+      NODE_TYPE: sentinel
+    links:
+      - slave1
+      - master
+      - sentinel
+
+  slave2:
+    build: ./redis
+    image: slave2
+    container_name: slave2
+    hostname: slave2
+    environment:
+      NODE_TYPE: slave
+    links:
+      - master
+      - sentinel
+      - slave1
+      - sentinel1
+  sentinel2:
+    build: ./redis
+    image: sentinel2
+    container_name: sentinel2
+    hostname: sentinel2
+    environment:
+      NODE_TYPE: sentinel
+    links:
+      - slave2
+      - master
+      - sentinel
+      - slave1
+      - sentinel1

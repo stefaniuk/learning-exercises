@@ -1,0 +1,18 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    config.vm.provider :virtualbox do |vb|
+        vb.name = "redis-sentinel"
+        vb.customize ["modifyvm", :id, "--ioapic", "on"]
+        vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+        vb.memory = 2048
+        vb.cpus = 2
+    end
+
+    config.vm.box = "ubuntu/trusty64"
+    config.vm.hostname = "redis-sentinel"
+    config.vm.synced_folder ".", "/project"
+    config.vm.provision "shell", path: "provision.sh"
+
+end
