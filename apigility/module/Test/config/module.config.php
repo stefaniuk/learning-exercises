@@ -56,7 +56,7 @@ return array(
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
-            'Test\\V1\\Rest\\User\\Controller' => 'HalJson',
+            'Test\\V1\\Rest\\User\\Controller' => 'Json',
             'Test\\V1\\Rpc\\Auth\\Controller' => 'Json',
         ),
         'accept-whitelist' => array(
@@ -78,11 +78,18 @@ return array(
                 1 => 'application/json',
                 2 => 'application/*+json',
             ),
+            'Test\\V1\\Rest\\User\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/*+json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Test\\V1\\Rpc\\Auth\\Controller' => array(
                 0 => 'application/vnd.test.v1+json',
                 1 => 'application/json',
+            ),
+            'Test\\V1\\Rest\\User\\Controller' => array(
+                0 => 'application/json',
             ),
         ),
     ),
