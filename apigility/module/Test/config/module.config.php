@@ -78,9 +78,8 @@ return array(
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
-            'Test\\V1\\Rpc\\Auth\\Controller' => 'Json',
-            'Test\\V1\\Rest\\User\\Controller' => 'Json',
-            'Test\\V1\\Rest\\Role\\Controller' => 'Json',
+            'Test\\V1\\Rest\\User\\Controller' => 'HalJson',
+            'Test\\V1\\Rest\\Role\\Controller' => 'HalJson',
         ),
         'accept-whitelist' => array(
             'Test\\V1\\Rest\\User\\Controller' => array(
@@ -130,6 +129,7 @@ return array(
                 'entity_identifier_name' => 'id',
                 'route_name' => 'test.rest.doctrine.user',
                 'hydrator' => 'Test\\V1\\Rest\\User\\UserHydrator',
+                'max_depth' => 2,
             ),
             'Test\\V1\\Rest\\User\\UserCollection' => array(
                 'entity_identifier_name' => 'id',
@@ -164,27 +164,27 @@ return array(
     'doctrine-hydrator' => array(
         'Test\\V1\\Rest\\User\\UserHydrator' => array(
             'entity_class' => 'Application\\Entity\\User',
+            'hydrator' => 'DoctrineModule\\Stdlib\\Hydrator\\DoctrineObject',
             'object_manager' => 'doctrine.entitymanager.orm_default',
-            'by_value' => true,
-            'strategies' => array(),
+            'by_value' => false,
+            'strategies' => array(
+                'roles' => 'ZF\\Apigility\\Doctrine\\Server\\Hydrator\\Strategy\\CollectionExtract',
+            ),
             'use_generated_hydrator' => true,
         ),
         'Test\\V1\\Rest\\Role\\RoleHydrator' => array(
             'entity_class' => 'Application\\Entity\\Role',
+            'hydrator' => 'DoctrineModule\\Stdlib\\Hydrator\\DoctrineObject',
             'object_manager' => 'doctrine.entitymanager.orm_default',
             'by_value' => true,
             'strategies' => array(),
             'use_generated_hydrator' => true,
         ),
     ),
-    'zf-content-validation' => array(
-    ),
-    'input_filter_specs' => array(
-    ),
+    'zf-content-validation' => array(),
+    'input_filter_specs' => array(),
     'controllers' => array(
-        'factories' => array(
-        ),
+        'factories' => array(),
     ),
-    'zf-rpc' => array(
-    ),
+    'zf-rpc' => array(),
 );

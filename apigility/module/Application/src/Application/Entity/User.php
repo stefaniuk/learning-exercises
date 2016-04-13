@@ -10,13 +10,12 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\Table;
-use Zend\Stdlib\ArraySerializableInterface;
 
 /**
  * @Entity
  * @Table(name="Users")
  */
-class User implements ArraySerializableInterface
+class User
 {
     /**
      * @Id
@@ -36,7 +35,7 @@ class User implements ArraySerializableInterface
     protected $password;
 
     /**
-     * @ManyToMany(targetEntity="Application\Entity\Role")
+     * @ManyToMany(targetEntity="Application\Entity\Role", fetch="EAGER")
      * @JoinTable(name="UserRoles",
      *     joinColumns={@JoinColumn(name="userId", referencedColumnName="id")},
      *     inverseJoinColumns={@JoinColumn(name="roleId", referencedColumnName="id")})
@@ -61,36 +60,5 @@ class User implements ArraySerializableInterface
     public function getRoles()
     {
         return $this->roles;
-    }
-
-    public function exchangeArray(array $data)
-    {
-        foreach ($data as $key => $value) {
-            switch ($key) {
-                case 'username':
-                    $this->username = $value;
-                    break;
-                case 'password':
-                    $this->password = $value;
-                    break;
-                case 'roles':
-                    $this->roles = $value;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        return $this;
-    }
-
-    public function getArrayCopy()
-    {
-        return [
-            'id' => $this->id,
-            'username' => $this->username,
-            'password' => $this->password,
-            'roles' => $this->roles,
-        ];
     }
 }

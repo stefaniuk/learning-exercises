@@ -7,13 +7,12 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
-use Zend\Stdlib\ArraySerializableInterface;
 
 /**
  * @Entity
  * @Table(name="Roles")
  */
-class Role implements ArraySerializableInterface
+class Role
 {
     /**
      * @Id
@@ -35,28 +34,5 @@ class Role implements ArraySerializableInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    public function exchangeArray(array $data)
-    {
-        foreach ($data as $key => $value) {
-            switch ($key) {
-                case 'name':
-                    $this->name = $value;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        return $this;
-    }
-
-    public function getArrayCopy()
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-        ];
     }
 }
