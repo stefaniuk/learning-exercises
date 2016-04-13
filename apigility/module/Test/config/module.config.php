@@ -2,6 +2,15 @@
 return array(
     'router' => array(
         'routes' => array(
+            'test.rest.doctrine.role' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/role[/:role_id]',
+                    'defaults' => array(
+                        'controller' => 'Test\\V1\\Rest\\Role\\Controller',
+                    ),
+                ),
+            ),
             'test.rest.doctrine.user' => array(
                 'type' => 'Segment',
                 'options' => array(
@@ -11,22 +20,12 @@ return array(
                     ),
                 ),
             ),
-            'test.rpc.auth' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/auth',
-                    'defaults' => array(
-                        'controller' => 'Test\\V1\\Rpc\\Auth\\Controller',
-                        'action' => 'auth',
-                    ),
-                ),
-            ),
         ),
     ),
     'zf-versioning' => array(
         'uri' => array(
             0 => 'test.rest.doctrine.user',
-            1 => 'test.rpc.auth',
+            1 => 'test.rest.doctrine.role',
         ),
     ),
     'zf-rest' => array(
@@ -53,42 +52,73 @@ return array(
             'collection_class' => 'Test\\V1\\Rest\\User\\UserCollection',
             'service_name' => 'User',
         ),
+        'Test\\V1\\Rest\\Role\\Controller' => array(
+            'listener' => 'Test\\V1\\Rest\\Role\\RoleResource',
+            'route_name' => 'test.rest.doctrine.role',
+            'route_identifier_name' => 'role_id',
+            'entity_identifier_name' => 'id',
+            'collection_name' => 'role',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Application\\Entity\\Role',
+            'collection_class' => 'Test\\V1\\Rest\\Role\\RoleCollection',
+            'service_name' => 'Role',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
-            'Test\\V1\\Rest\\User\\Controller' => 'Json',
             'Test\\V1\\Rpc\\Auth\\Controller' => 'Json',
+            'Test\\V1\\Rest\\User\\Controller' => 'Json',
+            'Test\\V1\\Rest\\Role\\Controller' => 'Json',
         ),
         'accept-whitelist' => array(
             'Test\\V1\\Rest\\User\\Controller' => array(
-                0 => 'application/vnd.test.v1+json',
-                1 => 'application/hal+json',
-                2 => 'application/json',
+                0 => 'application/json',
+                1 => 'application/vnd.test.v1+json',
+                2 => 'application/hal+json',
+            ),
+            'Test\\V1\\Rest\\Role\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/vnd.test.v1+json',
+                2 => 'application/hal+json',
             ),
         ),
         'content-type-whitelist' => array(
             'Test\\V1\\Rest\\User\\Controller' => array(
-                0 => 'application/vnd.test.v1+json',
-                1 => 'application/json',
+                0 => 'application/json',
+                1 => 'application/vnd.test.v1+json',
+            ),
+            'Test\\V1\\Rest\\Role\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/vnd.test.v1+json',
             ),
         ),
         'accept_whitelist' => array(
-            'Test\\V1\\Rpc\\Auth\\Controller' => array(
-                0 => 'application/vnd.test.v1+json',
-                1 => 'application/json',
-                2 => 'application/*+json',
-            ),
             'Test\\V1\\Rest\\User\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/*+json',
+            ),
+            'Test\\V1\\Rest\\Role\\Controller' => array(
                 0 => 'application/json',
                 1 => 'application/*+json',
             ),
         ),
         'content_type_whitelist' => array(
-            'Test\\V1\\Rpc\\Auth\\Controller' => array(
-                0 => 'application/vnd.test.v1+json',
-                1 => 'application/json',
-            ),
             'Test\\V1\\Rest\\User\\Controller' => array(
+                0 => 'application/json',
+            ),
+            'Test\\V1\\Rest\\Role\\Controller' => array(
                 0 => 'application/json',
             ),
         ),
@@ -106,6 +136,17 @@ return array(
                 'route_name' => 'test.rest.doctrine.user',
                 'is_collection' => true,
             ),
+            'Application\\Entity\\Role' => array(
+                'route_identifier_name' => 'role_id',
+                'entity_identifier_name' => 'id',
+                'route_name' => 'test.rest.doctrine.role',
+                'hydrator' => 'Test\\V1\\Rest\\Role\\RoleHydrator',
+            ),
+            'Test\\V1\\Rest\\Role\\RoleCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'test.rest.doctrine.role',
+                'is_collection' => true,
+            ),
         ),
     ),
     'zf-apigility' => array(
@@ -113,6 +154,10 @@ return array(
             'Test\\V1\\Rest\\User\\UserResource' => array(
                 'object_manager' => 'doctrine.entitymanager.orm_default',
                 'hydrator' => 'Test\\V1\\Rest\\User\\UserHydrator',
+            ),
+            'Test\\V1\\Rest\\Role\\RoleResource' => array(
+                'object_manager' => 'doctrine.entitymanager.orm_default',
+                'hydrator' => 'Test\\V1\\Rest\\Role\\RoleHydrator',
             ),
         ),
     ),
@@ -124,106 +169,22 @@ return array(
             'strategies' => array(),
             'use_generated_hydrator' => true,
         ),
+        'Test\\V1\\Rest\\Role\\RoleHydrator' => array(
+            'entity_class' => 'Application\\Entity\\Role',
+            'object_manager' => 'doctrine.entitymanager.orm_default',
+            'by_value' => true,
+            'strategies' => array(),
+            'use_generated_hydrator' => true,
+        ),
     ),
     'zf-content-validation' => array(
-        'Test\\V1\\Rest\\User\\Controller' => array(
-            'input_filter' => 'Test\\V1\\Rest\\User\\Validator',
-        ),
     ),
     'input_filter_specs' => array(
-        'Test\\V1\\Rest\\User\\Validator' => array(
-            0 => array(
-                'name' => 'username',
-                'required' => false,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(),
-            ),
-            1 => array(
-                'name' => 'password',
-                'required' => false,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(),
-            ),
-            2 => array(
-                'name' => 'profile',
-                'required' => false,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(),
-            ),
-            3 => array(
-                'name' => 'email',
-                'required' => false,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(),
-            ),
-            4 => array(
-                'name' => 'country',
-                'required' => false,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(),
-            ),
-            5 => array(
-                'name' => 'phone_number',
-                'required' => false,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(),
-            ),
-        ),
     ),
     'controllers' => array(
         'factories' => array(
-            'Test\\V1\\Rpc\\Auth\\Controller' => 'Test\\V1\\Rpc\\Auth\\AuthControllerFactory',
         ),
     ),
     'zf-rpc' => array(
-        'Test\\V1\\Rpc\\Auth\\Controller' => array(
-            'service_name' => 'Auth',
-            'http_methods' => array(
-                0 => 'GET',
-            ),
-            'route_name' => 'test.rpc.auth',
-        ),
     ),
 );

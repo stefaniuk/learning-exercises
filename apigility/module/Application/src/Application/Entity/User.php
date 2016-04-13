@@ -2,81 +2,79 @@
 
 namespace Application\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\Table;
 use Zend\Stdlib\ArraySerializableInterface;
 
 /**
- * Application\Entity\User.
- *
- * @ORM\Entity
- * @ORM\Table(name="Users")
+ * @Entity
+ * @Table(name="Users")
  */
 class User implements ArraySerializableInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
+     * @Column(type="integer")
      */
     protected $id;
-    protected $client;
-    protected $accessToken;
-    protected $authorizationCode;
-    protected $refreshToken;
 
-    // OpenID fields
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @Column(type="string", nullable=true)
      */
     protected $username;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @Column(type="string", nullable=true)
      */
     protected $password;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $profile;
+     * @ManyToMany(targetEntity="Application\Entity\Role")
+     * @JoinTable(name="UserRoles",
+     *     joinColumns={@JoinColumn(name="userId", referencedColumnName="id")},
+     *     inverseJoinColumns={@JoinColumn(name="roleId", referencedColumnName="id")})
+     **/
+    protected $roles;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $email;
+    public function getId()
+    {
+        return $this->id;
+    }
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $country;
+    public function getUsername()
+    {
+        return $this->username;
+    }
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $phone_number;
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getRoles()
+    {
+        return $this->roles;
+    }
 
     public function exchangeArray(array $data)
     {
         foreach ($data as $key => $value) {
             switch ($key) {
                 case 'username':
-                    $this->setUsername($value);
+                    $this->username = $value;
                     break;
                 case 'password':
-                    $this->setPassword($value);
+                    $this->password = $value;
                     break;
-                case 'profile':
-                    $this->setProfile($value);
-                    break;
-                case 'email':
-                    $this->setEmail($value);
-                    break;
-                case 'country':
-                    $this->setAddress($value);
-                    break;
-                case 'phone_number':
-                case 'phoneNumber':
-                    $this->setPhone($value);
+                case 'roles':
+                    $this->roles = $value;
                     break;
                 default:
                     break;
@@ -89,111 +87,10 @@ class User implements ArraySerializableInterface
     public function getArrayCopy()
     {
         return [
-            'id' => $this->getId(),
-            'username' => $this->getUsername(),
-            'password' => $this->getPassword(),
-            'profile' => $this->getProfile(),
-            'email' => $this->getEmail(),
-            'country' => $this->getCountry(),
-            'phone_number' => $this->getPhoneNumber(), // underscore formatting for openid
-            'phoneNumber' => $this->getPhoneNumber(),
+            'id' => $this->id,
+            'username' => $this->username,
+            'password' => $this->password,
+            'roles' => $this->roles,
         ];
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getPhoneNumber()
-    {
-        return $this->phone_number;
-    }
-
-    public function setPhoneNumber($value)
-    {
-        $this->phone_number = $value;
-
-        return $this;
-    }
-
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    public function setCountry($value)
-    {
-        $this->country = $value;
-
-        return $this;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($value)
-    {
-        $this->email = $value;
-
-        return $this;
-    }
-
-    public function getProfile()
-    {
-        return $this->profile;
-    }
-
-    public function setProfile($value)
-    {
-        $this->profile = $value;
-
-        return $this;
-    }
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function setUsername($value)
-    {
-        $this->username = $value;
-
-        return $this;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function setPassword($value)
-    {
-        $this->password = $value;
-
-        return $this;
-    }
-
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    public function getAccessToken()
-    {
-        return $this->accessToken;
-    }
-
-    public function getAuthorizationCode()
-    {
-        return $this->authorizationCode;
-    }
-
-    public function getRefreshToken()
-    {
-        return $this->refreshToken;
     }
 }
