@@ -22,7 +22,7 @@ class Role
     protected $id;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @Column(type="string", nullable=false, unique=true)
      */
     protected $name;
 
@@ -34,5 +34,10 @@ class Role
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 }

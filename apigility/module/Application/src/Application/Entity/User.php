@@ -6,9 +6,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 
 /**
@@ -25,20 +23,17 @@ class User
     protected $id;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @Column(type="string", nullable=false, unique=true)
      */
     protected $username;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @Column(type="string", nullable=false)
      */
     protected $password;
 
     /**
-     * @ManyToMany(targetEntity="Application\Entity\Role", fetch="EAGER")
-     * @JoinTable(name="UserRoles",
-     *     joinColumns={@JoinColumn(name="userId", referencedColumnName="id")},
-     *     inverseJoinColumns={@JoinColumn(name="roleId", referencedColumnName="id")})
+     * @OneToMany(targetEntity="Application\Entity\UserRole", mappedBy="user")
      **/
     protected $roles;
 
@@ -52,13 +47,33 @@ class User
         return $this->username;
     }
 
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
     public function getPassword()
     {
         return $this->password;
     }
 
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
     public function getRoles()
     {
         return $this->roles;
+    }
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    public function addRole(Role $role)
+    {
+        $this->roles[] = $role;
     }
 }
