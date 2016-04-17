@@ -4,6 +4,31 @@ $ vagrant ssh
 $ make bash
 $ php public/index.php orm:schema-tool:create
 ```
+
+```
+$ curl 'https://localhost:8443/role' -k -sSL --request POST \
+    -H 'Accept: application/json' -H 'Content-Type: application/json' \
+    --data '{"name":"role"}' | json | pygmentize -l json
+$ curl 'https://localhost:8443/user' -k -sSL --request POST \
+    -H 'Accept: application/json' -H 'Content-Type: application/json' \
+    --data '{"username":"user","password":"password"}' | json | pygmentize -l json
+$ curl 'https://localhost:8443/user-role' -k -sSL --request POST \
+    -H 'Accept: application/json' -H 'Content-Type: application/json' \
+    --data '{"user":1,"role":1}' | json | pygmentize -l json
+
+$ curl 'https://localhost:8443/user' -k -sSL --request GET \
+    -H 'Accept: application/json' -H 'Content-Type: application/json' \
+    | json | pygmentize -l json
+$ curl 'https://localhost:8443/user/1' -k -sSL --request GET \
+    -H 'Accept: application/json' -H 'Content-Type: application/json' \
+    | json | pygmentize -l json
+
+$ curl 'https://localhost:8443/user-role/1' -k -sSL --request GET \
+    -H 'Accept: application/json' -H 'Content-Type: application/json' \
+    | json | pygmentize -l json
+
+```
+
             'strategies' => array(
                 'roles' => 'ZF\\Apigility\\Doctrine\\Server\\Hydrator\\Strategy\\CollectionExtract',
             ),
@@ -21,22 +46,6 @@ $ php public/index.php orm:schema-tool:create
 
     -H 'Cookie: XDEBUG_SESSION=xdebug' \
 
-curl 'https://localhost:8443/apigility/api/module/Test/doctrine/User' -k -sSL \
-    -H 'Accept: application/json' \
-    -H 'Content-Type: application/json' \
-    --data '{"object_manager":"doctrine.entitymanager.orm_default","entity_class":"Application\\Entity\\User","service_name":"User"}'
-
-curl 'https://localhost:8443/role' -k -sSL --request POST \
-    -H 'Accept: application/json' \
-    -H 'Content-Type: application/json' \
-    --data '{"name":"roleX"}' \
-    | json | pygmentize -l json
-
-curl 'https://localhost:8443/user' -k -sSL --request POST \
-    -H 'Accept: application/json' \
-    -H 'Content-Type: application/json' \
-    --data '{"username":"user","password":"password"}' \
-    | json | pygmentize -l json
 
 curl 'https://localhost:8443/user/1' -k -sSL --request PATCH \
     -H 'Accept: application/json' \

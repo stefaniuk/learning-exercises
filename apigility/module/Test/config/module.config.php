@@ -178,6 +178,7 @@ return array(
                 'entity_identifier_name' => 'id',
                 'route_name' => 'test.rest.doctrine.user-role',
                 'hydrator' => 'Test\\V1\\Rest\\UserRole\\UserRoleHydrator',
+                'max_depth' => 1,
             ),
             'Test\\V1\\Rest\\UserRole\\UserRoleCollection' => array(
                 'entity_identifier_name' => 'id',

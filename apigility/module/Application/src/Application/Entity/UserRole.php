@@ -9,10 +9,13 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @Entity
- * @Table(name="UserRoles")
+ * @Table(name="UserRoles", uniqueConstraints={
+ *     @UniqueConstraint(name="unique", columns={"userId", "roleId"})
+ * })
  */
 class UserRole
 {
@@ -30,7 +33,7 @@ class UserRole
     protected $user;
 
     /**
-     * @ManyToOne(targetEntity="Application\Entity\User")
+     * @ManyToOne(targetEntity="Application\Entity\Role")
      * @JoinColumn(name="roleId", referencedColumnName="id")
      */
     protected $role;
