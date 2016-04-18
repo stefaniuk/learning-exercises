@@ -15,18 +15,18 @@ $ curl 'https://localhost:8443/user' -k -sSL --request POST \
 $ curl 'https://localhost:8443/user-role' -k -sSL --request POST \
     -H 'Accept: application/json' -H 'Content-Type: application/json' \
     --data '{"user":1,"role":1}' | json | pygmentize -l json
+```
 
+```
 $ curl 'https://localhost:8443/user' -k -sSL --request GET \
     -H 'Accept: application/json' -H 'Content-Type: application/json' \
     | json | pygmentize -l json
 $ curl 'https://localhost:8443/user/1' -k -sSL --request GET \
     -H 'Accept: application/json' -H 'Content-Type: application/json' \
     | json | pygmentize -l json
-
 $ curl 'https://localhost:8443/user-role/1' -k -sSL --request GET \
     -H 'Accept: application/json' -H 'Content-Type: application/json' \
     | json | pygmentize -l json
-
 ```
 
             'strategies' => array(
